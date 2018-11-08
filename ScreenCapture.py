@@ -1,9 +1,62 @@
 import numpy as np
 import cv2
 from mss import mss
+import time
+import pyautogui
+
+home = [[48, 236, 84, 0], [163, 134, 25, 0]]
+in_game = [[], []]
+
+top_pad = 133
+left_pad = 872
+width_pad = 350
+height_pad = 615
+
+monitor = {'top': top_pad, 'left': left_pad, 'width': width_pad, 'height': height_pad}
+
+sct = mss()
+
+last_time = time.time()
+
+def getScreen():
+    return np.array(sct.grab(monitor))
+
+def getScene(img):
+    return img[485-top_pad, 1045-left_pad], img[161-top_pad, 890-left_pad]
+
+def getMouseCoord(img):
+    return pyautogui.position()
+
+screen =  np.array(sct.grab(monitor))
+print(screen.shape)
+
+while True:
+    
+    screen =  np.array(sct.grab(monitor))
+
+    print(getScene(screen))
+
+    cv2.imshow('screen', screen)
+
+
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+        cv2.destroyAllWindows()
+        break
+
+
+
+
+
+
+
+'''
+import numpy as np
+import cv2
+from mss import mss
 from screeninfo import get_monitors
 import time
 import pyautogui
+
 
 
 #       monitor(1366x768+0+0) 
@@ -83,3 +136,5 @@ while True:
     if cv2.waitKey(25) & 0xFF == ord('q'):
         cv2.destroyAllWindows()
         break
+
+'''        
